@@ -57,7 +57,7 @@ export class AccountSignalResource extends StripeResource {
                     kind: 'object',
                     fields: {score: {kind: 'decimal_string'}},
                   },
-                  user_merchant_fit: {
+                  user_affinity: {
                     kind: 'object',
                     fields: {score: {kind: 'decimal_string'}},
                   },
@@ -120,7 +120,7 @@ export class AccountSignalResource extends StripeResource {
               kind: 'object',
               fields: {score: {kind: 'decimal_string'}},
             },
-            user_merchant_fit: {
+            user_affinity: {
               kind: 'object',
               fields: {score: {kind: 'decimal_string'}},
             },
@@ -206,9 +206,9 @@ export interface AccountSignal {
   user_account_sharing?: AccountSignal.UserAccountSharing;
 
   /**
-   * Data for the user-merchant fit signal. Present only when type is user_merchant_fit.
+   * Data for the user affinity signal. Present only when type is user_affinity.
    */
-  user_merchant_fit?: AccountSignal.UserMerchantFit;
+  user_affinity?: AccountSignal.UserAffinity;
 
   /**
    * Data for the user multi-accounting signal. Present only when type is user_multi_accounting.
@@ -310,7 +310,7 @@ export namespace AccountSignal {
     | 'merchant_delinquency'
     | 'payment_delinquency_exposure'
     | 'user_account_sharing'
-    | 'user_merchant_fit'
+    | 'user_affinity'
     | 'user_multi_accounting'
     | OtherString;
 
@@ -327,14 +327,14 @@ export namespace AccountSignal {
     score?: Decimal;
   }
 
-  export interface UserMerchantFit {
+  export interface UserAffinity {
     /**
-     * Categorical assessment of the user-merchant fit.
+     * Categorical assessment of the user affinity.
      */
-    fit_level: UserMerchantFit.FitLevel;
+    level: UserAffinity.Level;
 
     /**
-     * The specific fit score for the user, between 0.00 and 100.00. Absent when fit_level is unknown.
+     * The specific affinity score for the user, between 0.00 and 100.00. Absent when level is unknown.
      */
     score?: Decimal;
   }
@@ -550,8 +550,8 @@ export namespace AccountSignal {
       | 'unknown';
   }
 
-  export namespace UserMerchantFit {
-    export type FitLevel =
+  export namespace UserAffinity {
+    export type Level =
       | 'standard'
       | 'strong'
       | 'unknown'
@@ -602,7 +602,7 @@ export namespace V2 {
         | 'merchant_delinquency'
         | 'payment_delinquency_exposure'
         | 'user_account_sharing'
-        | 'user_merchant_fit'
+        | 'user_affinity'
         | 'user_multi_accounting'
         | OtherString;
 
